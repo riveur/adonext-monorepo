@@ -1,0 +1,22 @@
+{
+  "name": "adonext",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "workspaces": [
+    "apps/*"
+  ],
+  "engines": {
+    "node": ">=20.6"
+  },
+  "scripts": {
+    "frontend": "pnpm --filter frontend",
+    "backend": "pnpm --filter backend",
+    "dev:frontend": "pnpm run frontend dev",
+    "dev:backend": "pnpm run backend dev",
+    "dev": "pnpm run \"/^dev:.*/\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

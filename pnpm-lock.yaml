@@ -92,6 +92,9 @@ importers:
       '@tanstack/react-query':
         specifier: ^5.29.2
         version: 5.29.2(react@18.2.0)
+      ky:
+        specifier: ^1.2.3
+        version: 1.2.3
       next:
         specifier: 14.2.1
         version: 14.2.1(react-dom@18.2.0)(react@18.2.0)
@@ -3790,6 +3793,11 @@ packages:
       tildify: 2.0.0
     transitivePeerDependencies:
       - supports-color
+    dev: false
+
+  /ky@1.2.3:
+    resolution: {integrity: sha512-2IM3VssHfG2zYz2FsHRUqIp8chhLc9uxDMcK2THxgFfv8pQhnMfN8L0ul+iW4RdBl5AglF8ooPIflRm3yNH0IA==}
+    engines: {node: '>=18'}
     dev: false
 
   /language-subtag-registry@0.3.22:

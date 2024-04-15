@@ -5,9 +5,9 @@ export class RouteObject<
   RequestParams = FetchOptions['params'],
 > {
   public async request(
-    payload?: FetchOptions<RequestBody, RequestParams>,
+    options?: FetchOptions<RequestBody, RequestParams>,
   ) {
-    return fetcher({ method: this.method, path: this.path }, payload);
+    return fetcher({ method: this.method, path: this.path }, options);
   }
 
   public method: AllowedMethods;

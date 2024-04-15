@@ -15,7 +15,9 @@ export type FetchOptions<
 > = (RequestBody extends Record<string, unknown> ?
   { body: RequestBody } : { body?: RequestBody }) &
   (RequestParams extends Record<string, string | number> ?
-    { params: RequestParams } : { params?: RequestParams });
+    { params: RequestParams } : { params?: RequestParams }) & {
+      headers?: Options["headers"];
+    };
 
 function buildEndpoint(path: string, params: FetchOptions['params'] = {}) {
   const apiUrl = isProduction ? process.env.NEXT_PUBLIC_API_URL : 'http://localhost:3333';
@@ -29,13 +31,20 @@ function buildEndpoint(path: string, params: FetchOptions['params'] = {}) {
 
 export async function fetcher(endpoint: ApiEndpoint, options: FetchOptions = {}) {
   const url = buildEndpoint(endpoint.path, options.params);
-
   const fetchOptions: Options = {
     method: endpoint.method,
     headers: {
       'Accept': 'application/json',
     },
+    credentials: 'include'
   };
+
+  if (options.headers) {
+    fetchOptions.headers = {
+      ...fetchOptions.headers,
+      ...options.headers,
+    };
+  }
 
   if (options.body) {
     fetchOptions.body = JSON.stringify(options.body);

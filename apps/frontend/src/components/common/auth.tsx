@@ -5,14 +5,19 @@ import { cookies } from "next/headers";
 import { redirect, } from "next/navigation";
 import * as React from "react";
 
-export function withServerAuth<T extends {}>(Component: React.ComponentType<T>) {
+type HocAuthOptions = {
+  redirect?: string;
+}
+
+export function withServerAuth<T extends {}>(Component: React.ComponentType<T>, options: HocAuthOptions = {}) {
+  const { redirect: redirectUrl = "/login" } = options;
   return async function Wrapper(props: T) {
     const queryClient = new QueryClient();
 
     const serverCookies = cookies();
 
     if (!serverCookies.has("adonis-session")) {
-      redirect("/login");
+      redirect(redirectUrl);
     }
 
     await queryClient.prefetchQuery({
@@ -25,7 +30,7 @@ export function withServerAuth<T extends {}>(Component: React.ComponentType<T>) 
     });
 
     if (!queryClient.getQueryData(["auth"])) {
-      redirect("/login");
+      redirect(redirectUrl);
     }
 
     return (
@@ -36,7 +41,8 @@ export function withServerAuth<T extends {}>(Component: React.ComponentType<T>) 
   }
 }
 
-export function withServerGuest<T extends {}>(Component: React.ComponentType<T>) {
+export function withServerGuest<T extends {}>(Component: React.ComponentType<T>, options: HocAuthOptions = {}) {
+  const { redirect: redirectUrl = "/protected" } = options;
   return async function Wrapper(props: T) {
     try {
       await routes.auth.me.request({
@@ -46,6 +52,6 @@ export function withServerGuest<T extends {}>(Component: React.ComponentType<T>)
       return <Component {...props} />;
     }
 
-    redirect("/protected");
+    redirect(redirectUrl);
   }
 }

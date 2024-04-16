@@ -34,9 +34,6 @@ export function RegisterForm() {
     routes.auth.register.request({ body: data })
       .then(() => {
         router.push("/protected");
-      })
-      .catch((error) => {
-        console.log(error)
       });
   }
 

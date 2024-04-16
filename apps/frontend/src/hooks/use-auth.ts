@@ -14,7 +14,6 @@ export default function useAuth() {
 
   useEffect(() => {
     if (query.error) {
-      console.log(query.error);
       router.replace("/login");
     }
   }, [query.error, router]);

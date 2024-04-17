@@ -8,6 +8,10 @@ export default function UserInfo() {
   const user = useAuth();
   const formatter = new Intl.DateTimeFormat("default");
 
+  if (!user) {
+    return null;
+  }
+
   return (
     <Card>
       <CardContent className="pb-0">

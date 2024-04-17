@@ -33,7 +33,7 @@ export function RegisterForm() {
   const onSubmit = async (data: RegisterInput) => {
     routes.auth.register.request({ body: data })
       .then(() => {
-        router.push("/protected");
+        router.refresh();
       });
   }
 

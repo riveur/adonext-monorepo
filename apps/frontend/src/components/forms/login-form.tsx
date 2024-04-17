@@ -29,7 +29,7 @@ export function LoginForm() {
   const onSubmit = async (data: LoginInput) => {
     routes.auth.login.request({ body: data })
       .then(() => {
-        router.replace("/protected");
+        router.refresh();
       })
       .catch(() => {
         form.setError("root", { message: "Invalid credentials" });

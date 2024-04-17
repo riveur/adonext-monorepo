@@ -1,6 +1,7 @@
 import routes from "@/lib/api/routes";
+import { prefetchQuery } from "@/lib/query";
 import { UserSchema } from "@/lib/validation";
-import { HydrationBoundary, QueryClient, dehydrate } from "@tanstack/react-query";
+import { HydrationBoundary, dehydrate } from "@tanstack/react-query";
 import { cookies } from "next/headers";
 import { redirect, } from "next/navigation";
 import * as React from "react";
@@ -12,7 +13,6 @@ type HocAuthOptions = {
 export function withServerAuth<T extends {}>(Component: React.ComponentType<T>, options: HocAuthOptions = {}) {
   const { redirect: redirectUrl = "/login" } = options;
   return async function Wrapper(props: T) {
-    const queryClient = new QueryClient();
 
     const serverCookies = cookies();
 
@@ -20,7 +20,8 @@ export function withServerAuth<T extends {}>(Component: React.ComponentType<T>, 
       redirect(redirectUrl);
     }
 
-    await queryClient.prefetchQuery({
+    const queryClient = await prefetchQuery({
+      dehydrate: false,
       queryKey: ["auth"],
       queryFn: () => routes.auth.me.request({
         headers: {

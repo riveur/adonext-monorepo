@@ -3,17 +3,17 @@
 import routes from "@/lib/api/routes";
 import { Button } from "../ui/button";
 import { useRouter } from "next/navigation";
+import { useQueryClient } from "@tanstack/react-query";
 
-type LogoutButtonProps = {
-  redirectUrl?: string;
-}
-
-export default function LogoutButton({ redirectUrl = '/login' }: LogoutButtonProps) {
+export default function LogoutButton() {
   const router = useRouter();
+  const queryClient = useQueryClient();
   const onClick = () => {
-    routes.auth.logout.request().then(() => {
-      router.replace(redirectUrl);
-    });
+    routes.auth.logout.request()
+      .then(async () => {
+        await queryClient.invalidateQueries({ queryKey: ["auth"] });
+        router.refresh();
+      });
   }
 
   return (

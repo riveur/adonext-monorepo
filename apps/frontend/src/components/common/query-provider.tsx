@@ -2,6 +2,7 @@
 
 import { ReactNode, FC } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 function buildQueryClient() {
   return new QueryClient({
@@ -30,6 +31,7 @@ const QueryProvider: FC<{ children: ReactNode }> = ({ children }) => {
   return (
     <QueryClientProvider client={queryClient}>
       {children}
+      <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );
 }

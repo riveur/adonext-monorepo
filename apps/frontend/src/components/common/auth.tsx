@@ -1,6 +1,6 @@
 import routes from "@/lib/api/routes";
 import { prefetchQuery } from "@/lib/query";
-import { UserSchema } from "@/lib/validation";
+import { User, UserSchema } from "@/lib/validation";
 import { HydrationBoundary, dehydrate } from "@tanstack/react-query";
 import { cookies } from "next/headers";
 import { redirect, } from "next/navigation";
@@ -30,9 +30,13 @@ export function withServerAuth<T extends {}>(Component: React.ComponentType<T>, 
       }).then(UserSchema.parse),
     });
 
-    if (!queryClient.getQueryData(["auth"])) {
+    const user = queryClient.getQueryData<User>(["auth"]);
+
+    if (!user) {
       redirect(redirectUrl);
     }
+
+    props = { ...props, user: user! };
 
     return (
       <HydrationBoundary state={dehydrate(queryClient)}>

@@ -43,7 +43,7 @@ export function withServerAuth<T extends {}>(Component: React.ComponentType<T>, 
 }
 
 export function withServerGuest<T extends {}>(Component: React.ComponentType<T>, options: HocAuthOptions = {}) {
-  const { redirect: redirectUrl = "/protected" } = options;
+  const { redirect: redirectUrl = "/dashboard" } = options;
   return async function Wrapper(props: T) {
     try {
       await routes.auth.me.request({

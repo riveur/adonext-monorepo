@@ -14,23 +14,23 @@ export default function UserInfo() {
 
   return (
     <Card>
-      <CardContent className="pb-0">
+      <CardContent className="p-0">
         <Table>
           <TableBody>
             <TableRow>
-              <TableHead>Username</TableHead>
+              <TableHead className="text-end">Username</TableHead>
               <TableCell>{user.username}</TableCell>
             </TableRow>
             <TableRow>
-              <TableHead>Email</TableHead>
+              <TableHead className="text-end">Email</TableHead>
               <TableCell>{user.email}</TableCell>
             </TableRow>
             <TableRow>
-              <TableHead>Created at</TableHead>
+              <TableHead className="text-end">Created at</TableHead>
               <TableCell>{formatter.format(new Date(user.created_at))}</TableCell>
             </TableRow>
             <TableRow>
-              <TableHead>Updated at</TableHead>
+              <TableHead className="text-end">Updated at</TableHead>
               <TableCell>{formatter.format(new Date(user.updated_at))}</TableCell>
             </TableRow>
           </TableBody>

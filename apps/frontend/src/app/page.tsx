@@ -40,14 +40,14 @@ export default function Home() {
             </CardContent>
           </Card>
         </Link>
-        <Link href="/protected" className="group">
+        <Link href="/dashboard" className="group">
           <Card className="h-full group-hover:-translate-y-1 transition-all duration-75">
             <CardHeader>
-              <CardTitle>Protected route</CardTitle>
+              <CardTitle>Dashboard</CardTitle>
             </CardHeader>
             <CardContent>
               <CardDescription>
-                Example of a protected route
+                Example of a dashboard page
               </CardDescription>
             </CardContent>
           </Card>

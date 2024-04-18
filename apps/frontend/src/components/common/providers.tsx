@@ -2,12 +2,20 @@
 
 import { FC, ReactNode } from "react";
 import QueryProvider from "./query-provider";
+import { ThemeProvider } from "./theme-provider";
 
 const Providers: FC<{ children: ReactNode }> = ({ children }) => {
   return (
-    <QueryProvider>
-      {children}
-    </QueryProvider>
+    <ThemeProvider
+      attribute="class"
+      defaultTheme="system"
+      enableSystem
+      disableTransitionOnChange
+    >
+      <QueryProvider>
+        {children}
+      </QueryProvider>
+    </ThemeProvider>
   );
 }
 

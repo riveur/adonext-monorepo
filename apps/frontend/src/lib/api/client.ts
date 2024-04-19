@@ -17,20 +17,39 @@ export type FetchOptions<
   (RequestParams extends Record<string, string | number> ?
     { params: RequestParams } : { params?: RequestParams }) & {
       headers?: Options["headers"];
+      searchParams?: Record<string, string | string[] | undefined>;
     };
 
-function buildEndpoint(path: string, params: FetchOptions['params'] = {}) {
-  const apiUrl = isProduction ? process.env.NEXT_PUBLIC_API_URL : 'http://localhost:3333';
+function parseSearchParams(searchParams: Record<string, string | string[] | undefined>) {
+  const search = new URLSearchParams();
+  Object.keys(searchParams).forEach((key) => {
+    const value = searchParams[key];
+    if (Array.isArray(value)) {
+      value.forEach((v) => {
+        search.append(key, v);
+      });
+    } else if (value !== undefined) {
+      search.append(key, value);
+    }
+  });
+  return search;
+}
 
+function buildEndpoint(path: string, options: Pick<FetchOptions, "params" | "searchParams"> = {}) {
+  const params = options.params || {};
+  const apiUrl = isProduction ? process.env.NEXT_PUBLIC_API_URL : 'http://localhost:3333';
   Object.keys(params).forEach((key) => {
     path = path.replace(`:${key}`, params[key].toString());
   });
-
+  if (options.searchParams) {
+    const searchParams = parseSearchParams(options.searchParams);
+    path += `?${searchParams.toString()}`;
+  }
   return apiUrl + path;
 }
 
 export async function fetcher(endpoint: ApiEndpoint, options: FetchOptions = {}) {
-  const url = buildEndpoint(endpoint.path, options.params);
+  const url = buildEndpoint(endpoint.path, { params: options.params, searchParams: options.searchParams });
   const fetchOptions: Options = {
     method: endpoint.method,
     headers: {

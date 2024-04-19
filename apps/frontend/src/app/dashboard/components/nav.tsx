@@ -32,7 +32,7 @@ export function SideNav() {
       {LINKS.map((link) => (
         <Link
 
-          className={cn(pathname === link.path && "bg-muted", "mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground")}
+          className={cn(pathname === link.path && "bg-muted", "mx-[-0.65rem] flex items-center gap-4 rounded-sm px-3 py-2 text-muted-foreground hover:text-foreground")}
           key={link.path}
           href={link.path}
         >

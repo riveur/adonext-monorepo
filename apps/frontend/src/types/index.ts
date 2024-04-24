@@ -12,3 +12,18 @@ export type PaginationOptions = {
   limit?: string;
   sort?: string;
 };
+
+export type PaginatedResponse<Item> = {
+  meta: {
+    total: number;
+    perPage: number;
+    currentPage: number;
+    lastPage: number;
+    firstPage: number;
+    firstPageUrl: string;
+    lastPageUrl: string;
+    nextPageUrl: string | null;
+    previousPageUrl: string | null;
+  };
+  data: Item[];
+};

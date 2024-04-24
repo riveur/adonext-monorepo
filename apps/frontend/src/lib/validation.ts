@@ -1,5 +1,22 @@
 import { z } from "zod";
 
+function createPaginatedResponseSchema<ItemType extends z.ZodTypeAny>(itemSchema: ItemType) {
+  return z.object({
+    meta: z.object({
+      total: z.number(),
+      perPage: z.number(),
+      currentPage: z.number(),
+      lastPage: z.number(),
+      firstPage: z.number(),
+      firstPageUrl: z.string(),
+      lastPageUrl: z.string(),
+      nextPageUrl: z.string().nullable(),
+      previousPageUrl: z.string().nullable(),
+    }),
+    data: z.array(itemSchema),
+  });
+}
+
 export const LoginSchema = z.object({
   email: z.string().email(),
   password: z.string().min(1),

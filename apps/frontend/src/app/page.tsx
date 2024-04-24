@@ -1,6 +1,5 @@
 import { ToggleThemeButton } from "@/components/common/toggle-theme-button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 

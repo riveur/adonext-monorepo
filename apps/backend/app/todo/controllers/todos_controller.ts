@@ -14,6 +14,7 @@ export default class TodosController {
   async store({ request, response }: HttpContext) {
     const payload = await request.validateUsing(storeTodoValidator)
     const todo = await Todo.create(payload)
+    await todo.refresh()
     return response.created(todo)
   }
 

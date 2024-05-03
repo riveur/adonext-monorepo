@@ -45,3 +45,24 @@ export const UserSchema = z.object({
 });
 
 export type User = z.infer<typeof UserSchema>;
+
+export const TodoSchema = z.object({
+  id: z.number(),
+  content: z.string(),
+  completed: z.boolean(),
+  created_at: z.string(),
+  updated_at: z.string(),
+});
+
+export type Todo = z.infer<typeof TodoSchema>;
+
+export const StoreTodoSchema = z.object({
+  content: z.string().min(1).trim(),
+});
+
+export const UpdateTodoSchema = z.object({
+  content: z.string().min(1).trim().optional(),
+  completed: z.boolean().optional(),
+});
+
+export const PaginatedTodosSchema = createPaginatedResponseSchema(TodoSchema);

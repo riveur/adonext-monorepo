@@ -14,9 +14,11 @@
  */
 
 import { auth } from "./auth";
+import { todo } from "./todo";
 
 const routes = {
   auth,
+  todo,
 }
 
 export default routes;
